@@ -6,10 +6,12 @@
 //   console.log("hazır");
 // });
 
-const button = $("button");
+const button = $(".btn-success");
+const button2 = $(".btn-primary");
 const input = $("input");
 const data = $("#data");
 const box = $(".box");
+const div = $(".container");
 
 $(() => {
   button.click(() => {
@@ -27,6 +29,21 @@ $(() => {
 
   input.change((e) => {
     data.text(e.target.value);
+  });
+
+  $(window).scroll(() => {
+    if ($(window).scrollTop() > 0) {
+      button2.show();
+    } else {
+      button2.hide();
+    }
+  });
+
+  button2.click(() => {
+    $("html,body").animate({
+      scrollTop: 0
+    });
+    // return false; //buton tipi submit olsaydı
   });
 });
 
