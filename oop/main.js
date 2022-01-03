@@ -75,4 +75,18 @@ let employee1 = new Employee("kaan", 25000);
 let employee2 = new Employee("recep", 15000);
 let employee3 = new Employee("fatma", 35000);
 
-console.log(employee1.taxCalculate());;
+console.log(employee1.taxCalculate());
+
+
+const obj = {
+    name: ' kaan',
+    lastName : 'şen'
+}
+
+console.log(obj);
+
+Object.create(obj);
+
+let obj2 = Object.create({ name: "kaan", last: "şen" });
+
+console.log(obj2);
