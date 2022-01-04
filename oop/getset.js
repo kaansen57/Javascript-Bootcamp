@@ -24,7 +24,7 @@ const person = {
 
 Object.defineProperty(person, "age", {
   value: 50,
-  writable: false,
+  writable: true,
 });
 
 person.age = 55;
