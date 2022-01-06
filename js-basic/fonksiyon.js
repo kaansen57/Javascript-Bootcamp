@@ -5,8 +5,6 @@ function sumAll() {
     // for (let index = 0; index < arguments.length; index++) {
     //     toplam += arguments[index];
     // }
-
-
     console.log(arguments);
 }
 
