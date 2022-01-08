@@ -4,8 +4,6 @@
 //     name: "kaan"
 // };
 
-
-
 // try {
 //   if (!user.email) {
 //     throw new Error("Email is empty");
