@@ -83,15 +83,17 @@ $text-color-dark: #333;
     display: inline-flex;
     justify-content: center;
     align-items: center;
-    width: 40%;
+    width: 250px;
     height: 40px;
     border-radius: 50px;
     margin: 1rem;
     color: $text-color-dark;
+    font-size: 16px;
     font-weight: 800;
     cursor: pointer;
     transition: all 0.5s ease;
     border: 1px solid #979797;
+    background: #fff;
     &:hover {
       transform: scale(1.1);
     }
@@ -107,7 +109,6 @@ $text-color-dark: #333;
 }
 
 .active {
-  
   background: $primary-color;
   border: none !important;
   color: $text-color-white !important;
