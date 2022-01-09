@@ -1,0 +1,159 @@
+@import url("https://fonts.googleapis.com/css2?family=Mulish:wght@400;500;600;700;800;900&display=swap");
+* {
+  font-family: "Mulish", sans-serif;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+.container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 2rem 1rem;
+}
+
+.title-container {
+  text-align: center;
+}
+
+.title-container .title {
+  font-size: 30px;
+}
+
+.title-container .title span {
+  font-weight: 900;
+}
+
+.title-container .question-time {
+  margin: 1rem 0;
+  font-weight: 600;
+  font-size: 18px;
+}
+
+.title-container .question-time span {
+  font-weight: 800;
+  color: #23dea5;
+}
+
+.questions-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 600px;
+  height: 450px;
+  border-radius: 1.2rem;
+  border: 1px solid #4fe5b7;
+}
+
+.questions-container .questions {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 100%;
+  height: 200px;
+  border-radius: 1.2rem 1.2rem 0 0;
+  background: #4fe5b7;
+  padding: 1.3rem 0;
+}
+
+.questions-container .questions .question-number {
+  font-size: 18px;
+  color: #eee;
+  margin-bottom: 2rem;
+}
+
+.questions-container .questions .question {
+  font-size: 20px;
+  color: #eee;
+  font-weight: 700;
+}
+
+.questions-container .results {
+  text-align: center;
+}
+
+.questions-container .results .result-title {
+  font-size: 16px;
+  color: #333;
+  margin: 0.5rem 0;
+}
+
+.input-group {
+  text-align: center;
+  height: 150px;
+}
+
+.input-group .answer {
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 40%;
+  height: 40px;
+  border-radius: 50px;
+  margin: 1rem;
+  color: #333;
+  font-weight: 800;
+  cursor: pointer;
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+  border: 1px solid #979797;
+}
+
+.input-group .answer:hover {
+  -webkit-transform: scale(1.1);
+          transform: scale(1.1);
+}
+
+.btn {
+  cursor: pointer;
+  font-weight: 800;
+  border: none;
+  border-radius: 50px;
+  width: 300px;
+  height: 40px;
+}
+
+.active {
+  background: #4fe5b7;
+  border: none !important;
+  color: #eee !important;
+  -webkit-transition: background 0.5s ease;
+  transition: background 0.5s ease;
+}
+
+.active:hover {
+  background: #23dea5;
+}
+/*# sourceMappingURL=index.css.map */
