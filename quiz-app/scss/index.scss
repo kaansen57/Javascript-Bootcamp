@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Mulish:wght@400;500;600;700;800;900&display=swap");
+@import "_mixins";
 
 $primary-color: #4fe5b7;
 $primary-color-darken: darken($primary-color, 10%);
@@ -45,6 +46,9 @@ $text-color-dark: #333;
   border-radius: 0.8rem;
   border: 1px solid $primary-color;
 
+  @include responsive(small) {
+     width:100%;
+  }
   .questions {
     display: flex;
     flex-direction: column;
@@ -134,5 +138,4 @@ $text-color-dark: #333;
   @extend .btn;
   @extend .active;
   justify-content: center;
-
 }

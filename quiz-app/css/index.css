@@ -64,6 +64,12 @@
   border: 1px solid #4fe5b7;
 }
 
+@media (max-width: 720px) {
+  .questions-container {
+    width: 100%;
+  }
+}
+
 .questions-container .questions {
   display: -webkit-box;
   display: -ms-flexbox;

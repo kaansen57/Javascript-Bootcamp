@@ -11,7 +11,9 @@ const questionsContainer = document.querySelector(".questions");
 const question = document.querySelector("#question");
 const answer = document.querySelectorAll(".answer");
 const results = document.querySelector(".results");
+const time = document.querySelector(".question-time");
 
+timesRemaining();
 //question prototype
 
 Question.prototype.checkAnswer = function (answer) {
@@ -128,4 +130,16 @@ function isResult(e) {
 
 function nodeNameCheck(target) {
   return target == "BUTTON";
+}
+
+function timesRemaining() {
+  
+  let times = Math.floor(300 / 60).toString().padStart(2, '0');
+
+  setInterval(() => {
+    if (times>0) {
+      times -= 1;
+      time.innerHTML = `Times Remaining : <span> ${times}</span>`;
+    }
+  },1000)
 }
