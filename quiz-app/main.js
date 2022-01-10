@@ -36,6 +36,7 @@ Quiz.prototype.getQuestion = function () {
 };
 
 Quiz.prototype.isFinish = function () {
+  
   return this.questions.length === this.questionsIndex;
 };
 
@@ -80,8 +81,9 @@ var q4 = new Question(
 );
 
 var questions = [q1, q2, q3, q4];
-var result;
+var result; //question choice 
 var quiz = new Quiz(questions);
+var interval; //times remaining interval object
 
 //first question load
 getQuiz();
@@ -125,6 +127,7 @@ function quizFinishScreen() {
     <br>
      `;
   retry.className = "retry";
+  clearInterval(interval);
 }
 
 function answerButtonCreate() {
@@ -159,7 +162,7 @@ function timesRemaining() {
   let minutes = Math.floor(300 / 60);
   let seconds = 0;
 
-  var interval = setInterval(() => {
+  interval = setInterval(() => {
     if (seconds > 0) {
       seconds -= 1;
       time.innerHTML = `Times Remaining : <span> ${minutes} : ${seconds}</span>`;
@@ -168,7 +171,6 @@ function timesRemaining() {
         seconds = 60;
         minutes--;
       } else {
-        clearInterval(interval);
         quizFinishScreen();
       }
     }
