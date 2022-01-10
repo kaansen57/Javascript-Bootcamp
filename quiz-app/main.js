@@ -12,6 +12,7 @@ const question = document.querySelector("#question");
 const answer = document.querySelectorAll(".answer");
 const results = document.querySelector(".results");
 const time = document.querySelector(".question-time");
+const retry = document.querySelector(".retry");
 
 timesRemaining();
 //question prototype
@@ -49,6 +50,8 @@ Quiz.prototype.guess = function (answer) {
   return nextQuestion;
 };
 
+//questions objects
+
 var q1 = new Question(
   "CSS'in açılımı nedir ?",
   [
@@ -72,7 +75,7 @@ var q3 = new Question(
 
 var q4 = new Question(
   "Hangisi bir frontend kütüphanesi / framework'ü değildir ? ",
-  ["Angular", "Vue", "React", "Svelte","KnockoutJs"],
+  ["Angular", "Vue", "React", "Svelte", "KnockoutJs"],
   "E"
 );
 
@@ -80,8 +83,12 @@ var questions = [q1, q2, q3, q4];
 var result;
 var quiz = new Quiz(questions);
 
+//first question load
 getQuiz();
 
+// events
+
+//next question
 sendResult.addEventListener("click", function () {
   if (result) {
     quiz.guess(result);
@@ -90,6 +97,15 @@ sendResult.addEventListener("click", function () {
   }
 });
 
+retry.addEventListener("click", function () {
+  window.location.reload();
+});
+
+
+
+//functions
+
+//get new question
 function getQuiz() {
   if (!quiz.isFinish()) {
     question.innerHTML = quiz.getQuestion().text;
@@ -98,10 +114,17 @@ function getQuiz() {
     }`;
     answerButtonCreate();
   } else {
-    results.innerHTML = "";
-    questionsContainer.className = "questions question-animation";
-    question.innerHTML = `Quiz The End <br>  Score : <b > ${quiz.score}</b>`;
+    quizFinishScreen();
   }
+}
+
+function quizFinishScreen() {
+  results.innerHTML = "";
+  questionsContainer.className = "questions question-animation";
+  question.innerHTML = `Quiz The End <br>  Score : <b > ${quiz.score}</b>
+    <br>
+     `;
+  retry.className = "retry";
 }
 
 function answerButtonCreate() {
@@ -133,13 +156,21 @@ function nodeNameCheck(target) {
 }
 
 function timesRemaining() {
-  
-  let times = Math.floor(300 / 60).toString().padStart(2, '0');
+  let minutes = Math.floor(300 / 60);
+  let seconds = 0;
 
-  setInterval(() => {
-    if (times>0) {
-      times -= 1;
-      time.innerHTML = `Times Remaining : <span> ${times}</span>`;
+  var interval = setInterval(() => {
+    if (seconds > 0) {
+      seconds -= 1;
+      time.innerHTML = `Times Remaining : <span> ${minutes} : ${seconds}</span>`;
+    } else {
+      if (minutes > 0) {
+        seconds = 60;
+        minutes--;
+      } else {
+        clearInterval(interval);
+        quizFinishScreen();
+      }
     }
-  },1000)
+  }, 1000);
 }

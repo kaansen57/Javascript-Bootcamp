@@ -58,6 +58,7 @@
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  position: relative;
   width: 600px;
   height: auto;
   border-radius: 0.8rem;
@@ -130,7 +131,7 @@
   font-size: 30px !important;
 }
 
-.btn, .next {
+.btn, .next, .retry {
   display: -webkit-inline-box;
   display: -ms-inline-flexbox;
   display: inline-flex;
@@ -155,16 +156,16 @@
   transition: transform 0.5s ease, -webkit-transform 0.5s ease;
 }
 
-.btn:hover, .next:hover {
+.btn:hover, .next:hover, .retry:hover {
   -webkit-transform: scale(1.1);
           transform: scale(1.1);
 }
 
-.btn .choices, .next .choices {
+.btn .choices, .next .choices, .retry .choices {
   display: -ms-grid;
   display: grid;
   place-items: center;
-  border-right: 1px solid #979797;
+  border-right: 1px solid #cfcfcf;
   width: 30px;
   height: 40px;
   margin-right: 5px;
@@ -188,5 +189,17 @@
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+}
+
+.hide {
+  display: none !important;
+}
+
+.retry {
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  position: absolute;
+  bottom: 60px;
 }
 /*# sourceMappingURL=index.css.map */
