@@ -4,19 +4,18 @@ function Question(text, choices, answer) {
   this.answer = answer;
 }
 
-const sendResult = document.querySelector(".enter");
+const sendResult = document.querySelector(".next");
 const questionNumber = document.querySelector(".question-number");
 const inputGroup = document.querySelector(".input-group");
+const questionsContainer = document.querySelector(".questions");
 const question = document.querySelector("#question");
 const answer = document.querySelectorAll(".answer");
+const results = document.querySelector(".results");
 
 //question prototype
 
 Question.prototype.checkAnswer = function (answer) {
-    console.log(typeof answer);
-    console.log(typeof this.answer);
-  console.log(this.answer === answer);
-  return this.answer === answer;
+  return this.answer.toLowerCase() === answer.toLowerCase();
 };
 
 //quiz contructor
@@ -56,20 +55,26 @@ var q1 = new Question(
     "Canvas Style Sheet",
     "Color Style Stil",
   ],
-  "Cascading Style Sheet"
+  "A"
 );
 var q2 = new Question(
   "Javascript kaç yılında ortaya çıkmıştır ?",
   [1998, 1996, 1995, 2004],
-  "1996"
+  "C"
 );
 var q3 = new Question(
   "Hangisi yazı rengini değiştirir ? ",
   ["color:red;", "font-color:red;", "background-color:red;", "colour:red;"],
-  "color:red;"
+  "A"
 );
 
-var questions = [q1, q2, q3];
+var q4 = new Question(
+  "Hangisi bir frontend kütüphanesi / framework'ü değildir ? ",
+  ["Angular", "Vue", "React", "Svelte","KnockoutJs"],
+  "E"
+);
+
+var questions = [q1, q2, q3, q4];
 var result;
 var quiz = new Quiz(questions);
 
@@ -91,19 +96,36 @@ function getQuiz() {
     }`;
     answerButtonCreate();
   } else {
-    question.innerHTML = `Quiz The End - Score : <b> ${quiz.score}</b>`;
+    results.innerHTML = "";
+    questionsContainer.className = "questions question-animation";
+    question.innerHTML = `Quiz The End <br>  Score : <b > ${quiz.score}</b>`;
   }
 }
 
 function answerButtonCreate() {
   inputGroup.innerHTML = "";
-  quiz.getQuestion().choices.forEach((x) => {
-    inputGroup.innerHTML += `<button class="answer" onclick="isResult(event)"> 
-  ${x}
+  let buttonChoices = ["A", "B", "C", "D", "E"];
+  quiz.getQuestion().choices.forEach((x, i) => {
+    inputGroup.innerHTML += `<button class="btn" onclick="isResult(event)"> 
+  <div class="choices">${buttonChoices[i]}</div> ${x}
   </button>`;
   });
 }
 function isResult(e) {
-  result = e.target.outerText;
+  document.querySelectorAll(".btn").forEach((target) => {
+    if (nodeNameCheck(target.nodeName)) {
+      target.className = "btn";
+    }
+  });
+
+  if (nodeNameCheck(e.target.nodeName)) {
+    e.target.className = "answer";
+    result = e.target.outerText[0];
+    e.target.className = "btn active";
+  }
   return result;
+}
+
+function nodeNameCheck(target) {
+  return target == "BUTTON";
 }
