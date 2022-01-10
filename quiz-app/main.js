@@ -14,7 +14,7 @@ const results = document.querySelector(".results");
 const time = document.querySelector(".question-time");
 const retry = document.querySelector(".retry");
 
-timesRemaining();
+
 //question prototype
 
 Question.prototype.checkAnswer = function (answer) {
@@ -85,6 +85,8 @@ var result; //question choice
 var quiz = new Quiz(questions);
 var interval; //times remaining interval object
 
+//time init
+timesRemaining();
 //first question load
 getQuiz();
 
@@ -161,7 +163,7 @@ function nodeNameCheck(target) {
 function timesRemaining() {
   let minutes = Math.floor(300 / 60);
   let seconds = 0;
-
+  time.innerHTML = `Times Remaining :`;
   interval = setInterval(() => {
     if (seconds > 0) {
       seconds -= 1;
