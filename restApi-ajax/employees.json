@@ -1,0 +1,8 @@
+{
+  "employees": [
+    { "firstName": "kaan", "lastName": "şen", "age": 24 },
+    { "firstName": "recep", "lastName": "şen", "age": 40 },
+    { "firstName": "fatma", "lastName": "şen", "age": 50 },
+    { "firstName": "mehmet", "lastName": "şen", "age": 70 }
+  ]
+}
