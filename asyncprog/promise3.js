@@ -51,3 +51,19 @@ request(myObj)
   .catch((err) => {
     console.log("Error : " + err);
   });
+
+
+  //Promise all
+
+const p1 = Promise.resolve("p1");
+const p2 = new Promise((resolve, reject) => {
+  setTimeout(resolve, 2000, "deneme");
+});
+
+const p3 = 123123123;
+const p4 = fetch("https://jsonplaceholder.typicode.com/posts").then(res => res.json());
+
+//bütün işlemler bitince bir dizi döndürecek
+Promise.all([p1, p2, p3, p4]).then(promises => {
+  console.log(promises);
+}) 
