@@ -5,7 +5,7 @@ let d: any = "kaan";
 let e: number[] = [1, 2, 3, 4];
 let f: Array<number> = [1, 2, 3];
 let g: any[] = [1, "a", true];
-//tuple ileparametrelerin sırasıyla hangi tipler olabileceğini belirleriz
+//tuple ile parametrelerin sırasıyla hangi tipler olabileceğini belirleriz
 let tuple: [string, number, boolean] = ["a", 5, false];
 
 d = 15;
@@ -36,5 +36,4 @@ let kredi2 = Payment2.kredi;
 let havale2 = Payment2.havale;
 let eft2 = Payment2.eft;
 console.log(Payment2);
-
 
