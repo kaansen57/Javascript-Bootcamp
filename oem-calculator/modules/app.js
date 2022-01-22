@@ -12,10 +12,10 @@ const ProductController = (function () {
 
   const data = {
     products: [
-    //   { id: 1, name: "Monitör", price: 100 },
-    //   { id: 2, name: "Ram", price: 200 },
-    //   { id: 3, name: "Klavye", price: 300 },
-    //   { id: 4, name: "Laptop", price: 400 },
+      //   { id: 1, name: "Monitör", price: 100 },
+      //   { id: 2, name: "Ram", price: 200 },
+      //   { id: 3, name: "Klavye", price: 300 },
+      //   { id: 4, name: "Laptop", price: 400 },
     ],
     selectedProduct: null,
     totalPrice: 0,
@@ -51,6 +51,7 @@ const UIController = (function () {
     cancel: "#cancel",
     name: "#name",
     price: "#price",
+    productListCard: "#productListCard",
   };
 
   return {
@@ -70,6 +71,13 @@ const UIController = (function () {
     },
     getSelectors: function () {
       return Selectors;
+    },
+    toggleProductListCard: function (isDisplay) {
+      isDisplay
+        ? (document.querySelector(Selectors.productListCard).style.display =
+            "block")
+        : (document.querySelector(Selectors.productListCard).style.display =
+            "none");
     },
   };
 })();
@@ -92,7 +100,8 @@ const App = (function (ProductCtrl, UICtrl) {
     const productPrice = document.querySelector(UISelectors.price).value;
 
     if (productName && productPrice && !isNaN(productPrice)) {
-      ProductCtrl.addProduct(productName, productPrice);
+        ProductCtrl.addProduct(productName, productPrice);
+        UICtrl.toggleProductListCard(true);
     }
     e.preventDefault();
   };
@@ -100,8 +109,14 @@ const App = (function (ProductCtrl, UICtrl) {
   return {
     init: function () {
       const products = ProductCtrl.getProducts();
-      UICtrl.createProductList(products);
 
+      //products card list show/hide
+      products.length > 0
+        ? UICtrl.createProductList(products)
+        : UICtrl.toggleProductListCard(false);
+
+          
+          
       //load event listener
       loadEventListener();
     },
