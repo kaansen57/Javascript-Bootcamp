@@ -7,7 +7,7 @@ const ProductController = (function () {
 
   let exchange = 3;
   let tlPrice = 0;
-  let dolarPrice = 0;
+
   const Product = function (id, name, price) {
     this.id = id;
     this.name = name;
@@ -16,10 +16,10 @@ const ProductController = (function () {
 
   const data = {
     products: [
-      //   { id: 1, name: "Monitör", price: 100 },
-      //   { id: 2, name: "Ram", price: 200 },
-      //   { id: 3, name: "Klavye", price: 300 },
-      //   { id: 4, name: "Laptop", price: 400 },
+      { id: 1, name: "Monitör", price: 100 },
+      { id: 2, name: "Ram", price: 200 },
+      { id: 3, name: "Klavye", price: 300 },
+      { id: 4, name: "Laptop", price: 400 },
     ],
     selectedProduct: null,
     totalPrice: 0,
@@ -27,8 +27,13 @@ const ProductController = (function () {
 
   return {
     //public area
+    editProductId: null,
     getProducts: function () {
       return data.products;
+    },
+    getProduct: function (productId) {
+      console.log(productId);
+      return data.products.filter((product) => product.id == productId)[0];
     },
     getData: function () {
       return data;
@@ -41,12 +46,31 @@ const ProductController = (function () {
       data.products.push({ id: id, name: productName, price: productPrice });
       UIController.createProductList(data.products);
     },
-    priceCalculate: function () {
-      dolarPrice = 0;
+    editSaveProduct: function (productName, productPrice) {
+      let selectedProduct = null;
       data.products.forEach((product) => {
-        dolarPrice += product.price;
+        if (product.id == data.selectedProduct.id) {
+          product.name = productName;
+          product.price = parseInt(productPrice);
+          selectedProduct = product;
+        }
       });
-      tlPrice = dolarPrice * exchange; // tl exchange
+      return selectedProduct;
+    },
+    setCurrentProduct: function (product) {
+      data.selectedProduct = product;
+    },
+    getCurrentProduct: function () {
+      return data.selectedProduct;
+    },
+    priceCalculate: function () {
+      data.totalPrice = 0;
+      data.products.forEach((product) => {
+        data.totalPrice += product.price;
+      });
+
+      const dolarPrice = data.totalPrice;
+      tlPrice = data.totalPrice * exchange; // tl exchange
 
       return {
         dolarPrice,
@@ -61,6 +85,7 @@ const ProductController = (function () {
 const UIController = (function () {
   const Selectors = {
     productList: "#item-list",
+    productLists: "#item-list tr",
     add: "#add",
     delete: "#delete",
     save: "#save",
@@ -88,6 +113,18 @@ const UIController = (function () {
       });
       document.querySelector(Selectors.productList).innerHTML = html;
     },
+    editSaveProduct: function (product) {
+      let editItem = null;
+      let items = document.querySelectorAll(Selectors.productLists);
+      items.forEach((row) => {
+        if (row.classList.contains("bg-warning")) {
+          row.children[1].textContent = product.name;
+          row.children[2].textContent = product.price + "$";
+          editItem = row;
+        }
+      });
+      return editItem;
+    },
     getSelectors: function () {
       return Selectors;
     },
@@ -111,6 +148,38 @@ const UIController = (function () {
         Selectors.tlPrice
       ).innerHTML = `Total <b> ${prices.tlPrice} ₺ </b>`;
     },
+    editProductInputFill: function () {
+      const selectedProduct = ProductController.getCurrentProduct();
+      if (selectedProduct) {
+        document.querySelector(Selectors.name).value = selectedProduct.name;
+        document.querySelector(Selectors.price).value = selectedProduct.price;
+      }
+    },
+    addButtonState: function (row) {
+
+      if (row) {
+        row.classList.remove('bg-warning');
+      }
+
+      UIController.clearInputData();
+      document.querySelector(Selectors.add).style.display = "inline";
+      document.querySelector(Selectors.save).style.display = "none";
+      document.querySelector(Selectors.delete).style.display = "none";
+      document.querySelector(Selectors.cancel).style.display = "none";
+    },
+    editButtonState: function (selectedRow) {
+      const parent = selectedRow.parentNode; //tbody seçtirdim
+
+      for (let i = 0; i < parent.children.length; i++) {
+        parent.children[i].classList.remove("bg-warning");
+      }
+
+      selectedRow.classList.add("bg-warning");
+      document.querySelector(Selectors.add).style.display = "none";
+      document.querySelector(Selectors.save).style.display = "inline";
+      document.querySelector(Selectors.delete).style.display = "inline";
+      document.querySelector(Selectors.cancel).style.display = "inline";
+    },
   };
 })();
 
@@ -126,8 +195,12 @@ const App = (function (ProductCtrl, UICtrl) {
       .addEventListener("click", productAdd);
 
     document
+      .querySelector(UISelectors.productList)
+      .addEventListener("click", editProduct);
+
+    document
       .querySelector(UISelectors.save)
-      .addEventListener("click", editProductSave); // hatalıı
+      .addEventListener("click", editSaveProduct);
   };
 
   const productAdd = function (e) {
@@ -145,21 +218,50 @@ const App = (function (ProductCtrl, UICtrl) {
       const prices = ProductCtrl.priceCalculate();
       UICtrl.pricesAdd(prices);
 
-        
       //clear input values
       UICtrl.clearInputData();
     }
     e.preventDefault();
   };
 
-  const editProductSave = function (e) {
+  const editProduct = function (e) {
+    const targetElement = e.target;
+    if (targetElement.id === "edit") {
+      UICtrl.editButtonState(e.target.parentNode.parentNode);
+
+      const id =
+        targetElement.parentNode.previousElementSibling.previousElementSibling
+          .previousElementSibling.textContent;
+      const product = ProductCtrl.getProduct(id);
+
+      ProductCtrl.setCurrentProduct(product); //seçili ürünü kaydet
+      UICtrl.editProductInputFill(); // seçili ürünü inputlara yaz
+    }
+    e.preventDefault();
+  };
+
+  const editSaveProduct = function (e) {
+    const productName = document.querySelector(UISelectors.name).value;
+    const productPrice = document.querySelector(UISelectors.price).value;
+
+    if (productName && productPrice && !isNaN(productPrice)) {
+      const editedProduct = ProductCtrl.editSaveProduct(
+        productName,
+        productPrice
+      );
+
+      let row = UICtrl.editSaveProduct(editedProduct);
+      const prices = ProductCtrl.priceCalculate();
+      UICtrl.pricesAdd(prices);
+      UICtrl.addButtonState(row);
+    }
     e.preventDefault();
   };
 
   return {
     init: function () {
       const products = ProductCtrl.getProducts();
-
+      UICtrl.addButtonState();
       //prices added
       const prices = ProductCtrl.priceCalculate();
       UICtrl.pricesAdd(prices);
