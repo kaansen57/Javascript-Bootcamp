@@ -1,7 +1,5 @@
 //storage controller
 export const StorageController = (function () {
-    
-    
     return {
       getStorageProducts: function () {
         return localStorage.getItem("products");
