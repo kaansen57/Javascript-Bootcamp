@@ -155,12 +155,16 @@ const UIController = (function () {
         document.querySelector(Selectors.price).value = selectedProduct.price;
       }
     },
-    addButtonState: function (row) {
-
-      if (row) {
-        row.classList.remove('bg-warning');
-      }
-
+    clearWarningsClass: function () {
+      const items = document.querySelectorAll(Selectors.productLists);
+      items.forEach(function (item) {
+        if (item.classList.contains("bg-warning")) {
+          item.classList.remove("bg-warning");
+        }
+      });
+    },
+    addButtonState: function () {
+      UIController.clearWarningsClass();
       UIController.clearInputData();
       document.querySelector(Selectors.add).style.display = "inline";
       document.querySelector(Selectors.save).style.display = "none";
@@ -168,11 +172,11 @@ const UIController = (function () {
       document.querySelector(Selectors.cancel).style.display = "none";
     },
     editButtonState: function (selectedRow) {
-      const parent = selectedRow.parentNode; //tbody seçtirdim
+      // const parent = selectedRow.parentNode; //tbody seçtirdim
 
-      for (let i = 0; i < parent.children.length; i++) {
-        parent.children[i].classList.remove("bg-warning");
-      }
+      // for (let i = 0; i < parent.children.length; i++) {
+      //   parent.children[i].classList.remove("bg-warning");
+      // }
 
       selectedRow.classList.add("bg-warning");
       document.querySelector(Selectors.add).style.display = "none";
@@ -201,6 +205,10 @@ const App = (function (ProductCtrl, UICtrl) {
     document
       .querySelector(UISelectors.save)
       .addEventListener("click", editSaveProduct);
+
+    document
+      .querySelector(UISelectors.cancel)
+      .addEventListener("click", cancelUpdate);
   };
 
   const productAdd = function (e) {
@@ -250,14 +258,18 @@ const App = (function (ProductCtrl, UICtrl) {
         productPrice
       );
 
-      let row = UICtrl.editSaveProduct(editedProduct);
+      UICtrl.editSaveProduct(editedProduct);
       const prices = ProductCtrl.priceCalculate();
       UICtrl.pricesAdd(prices);
-      UICtrl.addButtonState(row);
+      UICtrl.addButtonState();
     }
     e.preventDefault();
   };
 
+  const cancelUpdate = function (e) {
+    UICtrl.addButtonState();
+    e.preventDefault();
+  };
   return {
     init: function () {
       const products = ProductCtrl.getProducts();
